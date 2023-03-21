@@ -206,17 +206,18 @@ function resizeCanvas() {
     canvas.width = size;
     canvas.height = size;
 
+    // Remove the following two lines
+    // canvas.style.width = size + 'px';
+    // canvas.style.height = size + 'px';
+
     updateDimensions();
 
     topPaddleX = (canvas.width - paddleWidth) / 2;
     bottomPaddleX = (canvas.width - paddleWidth) / 2;
     ballX = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius;
     ballY = canvas.height / 10;
-
-    // Update the canvas style to fit within the phone's display size
-    canvas.style.width = canvas.width + 'px';
-    canvas.style.height = canvas.height + 'px';
 }
+
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
