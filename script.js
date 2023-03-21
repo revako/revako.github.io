@@ -1,6 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+// Set canvas dimensions based on the device screen size
 const minSide = Math.min(window.innerWidth, window.innerHeight);
 canvas.width = minSide;
 canvas.height = minSide;
