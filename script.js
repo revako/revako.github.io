@@ -1,20 +1,16 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-const initialPaddleHeight = 10;
-const initialPaddleWidth = 100;
-const initialBallRadius = 5;
-
-let paddleHeight = initialPaddleHeight;
-let paddleWidth = initialPaddleWidth;
-let ballRadius = initialBallRadius;
+let paddleHeight;
+let paddleWidth;
+let ballRadius;
 
 let topPaddleX;
 let bottomPaddleX;
 let ballX;
 let ballY;
-let ballSpeedX = 2;
-let ballSpeedY = 5;
+let ballSpeedX;
+let ballSpeedY;
 
 let hitCounter = 0;
 let gameInProgress = true;
@@ -85,10 +81,11 @@ function stopGame() {
 }
 
 function resetGame() {
-    ballX = canvas.width / 2;
-    ballY = canvas.height / 2;
-    ballSpeedX = 2;
-    ballSpeedY = 5;
+    ballX = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius;
+    ballY = canvas.height / 10;
+
+    ballSpeedX = 1;
+    ballSpeedY = 2.5;
     hitCounter = 0;
     gameInProgress = true;
 }
@@ -154,6 +151,14 @@ function gameLoop() {
 
 gameLoop();
 
+function updateDimensions() {
+    paddleWidth = canvas.width / 4;
+    paddleHeight = canvas.width / 40;
+    ballRadius = canvas.width / 80;
+    ballSpeedX = canvas.width / 300;
+    ballSpeedY = canvas.width / 150;
+}
+
 function resizeCanvas() {
     const aspectRatio = window.innerWidth / window.innerHeight;
     let size;
@@ -166,24 +171,22 @@ function resizeCanvas() {
         size = Math.min(window.innerHeight / 2, window.innerWidth);
     }
 
-    const scaleFactor = size / canvas.width;
-
     canvas.width = size;
     canvas.height = size;
 
-    paddleHeight = initialPaddleHeight * scaleFactor;
-    paddleWidth = initialPaddleWidth * scaleFactor;
-    ballRadius = initialBallRadius * scaleFactor;
+    updateDimensions();
 
     topPaddleX = (canvas.width - paddleWidth) / 2;
     bottomPaddleX = (canvas.width - paddleWidth) / 2;
-    ballX = canvas.width / 2;
-    ballY = canvas.height / 2;
+    ballX = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius;
+    ballY = canvas.height / 10;
+
 
     // Update the canvas style to fit within the phone's display size
     canvas.style.width = canvas.width + 'px';
     canvas.style.height = canvas.height + 'px';
 }
+
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
