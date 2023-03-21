@@ -40,7 +40,35 @@ function draw() {
 
     ctx.font = "30px Arial";
     ctx.fillStyle = "black";
-    ctx.fillText("Score: " + hitCounter, canvas.width / 2 - 90, canvas.height / 2 - 10);
+    const scoreText = "Score: " + hitCounter;
+    const scoreTextWidth = ctx.measureText(scoreText).width;
+    ctx.fillText(scoreText, (canvas.width - scoreTextWidth) / 2, canvas.height / 2 - 10);
+
+    if (!gameInProgress) {
+        const titleText = "A circle and lines";
+        const titleTextWidth = ctx.measureText(titleText).width;
+        ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 50);
+    }
+}
+
+function showQRCode() {
+    const qrCodeContainer = document.getElementById("qrCodeContainer");
+    if (qrCodeContainer.childElementCount === 0) {
+        const qrCodeCanvas = document.createElement("canvas");
+        QRCode.toCanvas(qrCodeCanvas, "https://revako.github.io", { width: canvas.width / 2 }, (error) => {
+            if (error) {
+                console.error(error);
+            } else {
+                qrCodeContainer.appendChild(qrCodeCanvas);
+            }
+        });
+    }
+    qrCodeContainer.style.display = "block";
+}
+
+function hideQRCode() {
+    const qrCodeContainer = document.getElementById("qrCodeContainer");
+    qrCodeContainer.style.display = "none";
 }
 
 function move(elapsedTime) {
@@ -81,6 +109,7 @@ function increaseBallSpeed() {
 
 function stopGame() {
     gameInProgress = false;
+    showQRCode();
 }
 
 function resetGame() {
@@ -91,6 +120,7 @@ function resetGame() {
     ballSpeedY = canvas.width / 150;
     hitCounter = 0;
     gameInProgress = true;
+    hideQRCode();
 }
 
 function handlePaddleMovement(clientX) {
