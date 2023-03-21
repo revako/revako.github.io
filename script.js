@@ -20,23 +20,33 @@ let hitCounter = 0;
 let gameInProgress = true;
 
 function draw() {
-    ctx.fillStyle = "lime";
+    ctx.fillStyle = "#b5e7a0";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "black";
+    // Draw the paddles
+    ctx.fillStyle = "yellow";
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 2;
     ctx.fillRect(topPaddleX, 0, paddleWidth, paddleHeight);
+    ctx.strokeRect(topPaddleX, 0, paddleWidth, paddleHeight);
     ctx.fillRect(bottomPaddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+    ctx.strokeRect(bottomPaddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
 
+    // Draw the ball
     ctx.beginPath();
     ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "yellow";
     ctx.fill();
+    ctx.strokeStyle = "black";
+    ctx.stroke();
     ctx.closePath();
 
-    ctx.font = "20px Arial";
-    ctx.fillStyle = "black";
-    ctx.fillText("Hits: " + hitCounter, canvas.width / 2 - 45, canvas.height / 2 - 10);
+    // Draw the text
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "black"; // Changed color to black
+    ctx.fillText("Score: " + hitCounter, canvas.width / 2 - 90, canvas.height / 2 - 10); // Updated the word "Hits" to "Score"
 }
+
 
 function move() {
     ballX += ballSpeedX;
