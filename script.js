@@ -1,9 +1,9 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Set canvas dimensions based on the device screen size
-canvas.width = window.innerWidth * 0.9;
-canvas.height = window.innerHeight * 0.8;
+const minSide = Math.min(window.innerWidth, window.innerHeight);
+canvas.width = minSide;
+canvas.height = minSide;
 
 const paddleHeight = 10;
 const paddleWidth = 100;
@@ -23,7 +23,6 @@ function draw() {
     ctx.fillStyle = "#b5e7a0";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw the paddles
     ctx.fillStyle = "yellow";
     ctx.strokeStyle = "black";
     ctx.lineWidth = 2;
@@ -32,7 +31,6 @@ function draw() {
     ctx.fillRect(bottomPaddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
     ctx.strokeRect(bottomPaddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
 
-    // Draw the ball
     ctx.beginPath();
     ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
     ctx.fillStyle = "yellow";
@@ -41,12 +39,10 @@ function draw() {
     ctx.stroke();
     ctx.closePath();
 
-    // Draw the text
     ctx.font = "30px Arial";
-    ctx.fillStyle = "black"; // Changed color to black
-    ctx.fillText("Score: " + hitCounter, canvas.width / 2 - 90, canvas.height / 2 - 10); // Updated the word "Hits" to "Score"
+    ctx.fillStyle = "black";
+    ctx.fillText("Score: " + hitCounter, canvas.width / 2 - 90, canvas.height / 2 - 10);
 }
-
 
 function move() {
     ballX += ballSpeedX;
@@ -61,18 +57,18 @@ function move() {
             ballSpeedY = -ballSpeedY;
             increaseBallSpeed();
             hitCounter++;
-            ballY = paddleHeight + ballRadius + 1; // Ensure the ball moves out of the paddle
+            ballY = paddleHeight + ballRadius + 1;
         } else if (ballY < 0) {
             stopGame();
         }
     }
 
-        if (ballY >= canvas.height - paddleHeight - ballRadius) {
+    if (ballY >= canvas.height - paddleHeight - ballRadius) {
         if (ballX >= bottomPaddleX - ballRadius && ballX <= bottomPaddleX + paddleWidth + ballRadius) {
             ballSpeedY = -ballSpeedY;
             increaseBallSpeed();
             hitCounter++;
-            ballY = canvas.height - paddleHeight - ballRadius - 1; // Ensure the ball moves out of the paddle
+            ballY = canvas.height - paddleHeight - ballRadius - 1;
         } else if (ballY > canvas.height) {
             stopGame();
         }
@@ -102,8 +98,8 @@ function handlePaddleMovement(clientX) {
     const newPaddleX = mouseX - paddleWidth / 2;
 
     if (newPaddleX >= 0 && newPaddleX <= canvas.width - paddleWidth) {
-        topPaddleX = newPaddleX;
         bottomPaddleX = newPaddleX;
+        topPaddleX = canvas.width - newPaddleX - paddleWidth; // Top paddle moves reversely
     }
 }
 
@@ -133,25 +129,16 @@ function gameLoop() {
 
 gameLoop();
 
-// Add this function to your JS file
 function resizeCanvas() {
-    const maxWidth = window.innerWidth * 0.9;
-    const maxHeight = window.innerHeight * 0.9;
+    const maxWidth = window.innerWidth;
+    const maxHeight = window.innerHeight;
 
-    const widthRatio = maxWidth / canvas.width;
-    const heightRatio = maxHeight / canvas.height;
+    const minSide = Math.min(maxWidth, maxHeight);
+    canvas.width = minSide;
+    canvas.height = minSide;
 
-    const scale = Math.min(widthRatio, heightRatio);
-    const newWidth = canvas.width * scale;
-    const newHeight = canvas.height * scale;
-
-    canvas.style.width = newWidth + 'px';
-    canvas.style.height = newHeight + 'px';
-
-    // Calculate the distance to the left and top display sides
-    const leftDistance = (window.innerWidth - newWidth) / 2;
-    const topDistance = (window.innerHeight - newHeight) / 3; // Divide by 3 instead of 2
-    document.body.style.paddingTop = topDistance + 'px';
+    canvas.style.width = minSide + 'px';
+    canvas.style.height = minSide + 'px';
 }
 
 window.addEventListener('resize', resizeCanvas);
