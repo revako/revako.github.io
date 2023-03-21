@@ -1,17 +1,18 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth * 1;
-canvas.height = window.innerHeight * 0.6;
+const initialPaddleHeight = 10;
+const initialPaddleWidth = 100;
+const initialBallRadius = 5;
 
-const paddleHeight = 10;
-const paddleWidth = 100;
-const ballRadius = 5;
+let paddleHeight = initialPaddleHeight;
+let paddleWidth = initialPaddleWidth;
+let ballRadius = initialBallRadius;
 
-let topPaddleX = (canvas.width - paddleWidth) / 2;
-let bottomPaddleX = (canvas.width - paddleWidth) / 2;
-let ballX = canvas.width / 2;
-let ballY = canvas.height / 2;
+let topPaddleX;
+let bottomPaddleX;
+let ballX;
+let ballY;
 let ballSpeedX = 2;
 let ballSpeedY = 5;
 
@@ -129,19 +130,32 @@ function gameLoop() {
 gameLoop();
 
 function resizeCanvas() {
-    const maxWidth = window.innerWidth;
-    const maxHeight = window.innerHeight * 0.6;
+    const aspectRatio = window.innerWidth / window.innerHeight;
+    let size;
 
-    const widthRatio = maxWidth / canvas.width;
-    const heightRatio = maxHeight / canvas.height;
+    if (aspectRatio < 0.5) {
+        // Portrait orientation, height is more than 2 times the width
+        size = window.innerWidth;
+    } else {
+        // Landscape orientation or height is less than 2 times the width
+        size = Math.min(window.innerHeight / 2, window.innerWidth);
+    }
 
-    const scale = Math.min(widthRatio, heightRatio);
-    const newWidth = canvas.width * scale;
-    const newHeight = canvas.height * scale;
+    const scaleFactor = size / canvas.width;
 
-    canvas.style.width = newWidth + 'px';
-    canvas.style.height = newHeight + 'px';
+    canvas.width = size;
+    canvas.height = size;
+
+    paddleHeight = initialPaddleHeight * scaleFactor;
+    paddleWidth = initialPaddleWidth * scaleFactor;
+    ballRadius = initialBallRadius * scaleFactor;
+
+    topPaddleX = (canvas.width - paddleWidth) / 2;
+    bottomPaddleX = (canvas.width - paddleWidth) / 2;
+    ballX = canvas.width / 2;
+    ballY = canvas.height / 2;
 }
+
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
