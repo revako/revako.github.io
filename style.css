@@ -12,12 +12,14 @@ body {
         }
 canvas {
     border: 1px solid black;
+    align-items: center;
     position: relative;
             top: 5%;
         }
 
 #qrCodeContainer {
      position: relative;
+     align-items: center;
             top: 25%;
         }
 
