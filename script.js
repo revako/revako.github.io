@@ -131,15 +131,15 @@ function gameLoop() {
 gameLoop();
 
 function resizeCanvas() {
-    const maxWidth = window.innerWidth;
-    const maxHeight = window.innerHeight;
-
-    const minSide = Math.min(maxWidth, maxHeight);
-    canvas.width = minSide;
-    canvas.height = minSide;
-
-    canvas.style.width = minSide + 'px';
-    canvas.style.height = minSide + 'px';
+    const side = Math.min(window.innerWidth, window.innerHeight);
+    canvas.width = side;
+    canvas.height = side;
+    topPaddleX = (canvas.width - paddleWidth) / 2;
+    bottomPaddleX = (canvas.width - paddleWidth) / 2;
+    ballX = canvas.width / 2;
+    ballY = canvas.height / 2;
+    ballSpeedY = canvas.height / 2;
+    canvas.style.marginTop = "10px"; // Add a margin to the top of the canvas
 }
 
 window.addEventListener('resize', resizeCanvas);
