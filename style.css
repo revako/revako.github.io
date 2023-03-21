@@ -6,3 +6,8 @@ body {
     margin: 0;
     background-color: #b5e7a0;
 }
+
+canvas {
+    border: 1px solid black;
+    margin-top: 10px; /* Add a margin to the top of the canvas */
+}
