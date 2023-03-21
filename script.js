@@ -1,19 +1,23 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth * 0.9;
-canvas.height = window.innerHeight * 0.8;
+canvas.width = window.innerWidth * 0.95;
+canvas.height = window.innerHeight * 0.5;
 
-const paddleHeight = 10;
-const paddleWidth = 100;
-const ballRadius = 5;
+const initialPaddleHeight = 10;
+const initialPaddleWidth = 100;
+const initialBallRadius = 5;
+
+let paddleHeight = initialPaddleHeight;
+let paddleWidth = initialPaddleWidth;
+let ballRadius = initialBallRadius;
 
 let topPaddleX = (canvas.width - paddleWidth) / 2;
 let bottomPaddleX = (canvas.width - paddleWidth) / 2;
 let ballX = canvas.width / 2;
 let ballY = canvas.height / 2;
-let ballSpeedX = 1;
-let ballSpeedY = 2.5;
+let ballSpeedX = 2;
+let ballSpeedY = 5;
 
 let hitCounter = 0;
 let gameInProgress = true;
@@ -86,8 +90,8 @@ function stopGame() {
 function resetGame() {
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
-    ballSpeedX = 1;
-    ballSpeedY = 2.5;
+    ballSpeedX = 2;
+    ballSpeedY = 5;
     hitCounter = 0;
     gameInProgress = true;
 }
@@ -129,18 +133,26 @@ function gameLoop() {
 gameLoop();
 
 function resizeCanvas() {
-    const side = Math.min(window.innerWidth, window.innerHeight);
-    canvas.width = side;
-    canvas.height = side;
+    const maxHeight = window.innerHeight * 0.5;
+    const maxWidth = window.innerWidth;
+
+    const size = Math.min(maxHeight, maxWidth);
+    const scaleFactor = size / canvas.height;
+
+    canvas.width = size;
+    canvas.height = size;
+
+    canvas.style.width = size + 'px';
+    canvas.style.height = size + 'px';
+
+    paddleHeight = initialPaddleHeight * scaleFactor;
+    paddleWidth = initialPaddleWidth * scaleFactor;
+    ballRadius = initialBallRadius * scaleFactor;
+
     topPaddleX = (canvas.width - paddleWidth) / 2;
     bottomPaddleX = (canvas.width - paddleWidth) / 2;
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
-    ballSpeedY = canvas.height / 2;
-
-    // Center the canvas horizontally
-    const leftOffset = (window.innerWidth - canvas.width) / 2;
-    canvas.style.left = leftOffset + 'px';
 }
 
 window.addEventListener('resize', resizeCanvas);
