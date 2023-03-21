@@ -89,6 +89,32 @@ function increaseBallSpeed() {
 
 function stopGame() {
     gameInProgress = false;
+    displayQRCode();
+}
+
+function displayQRCode() {
+    const qrCodeContainer = document.getElementById('qrCodeContainer');
+    const qrCodeSize = canvas.width / 3;
+    const qrCode = qrcode(0, 'L');
+    const url = 'https://revako.github.io/';
+
+    qrCode.addData(url);
+    qrCode.make();
+
+    const qrCodeImg = new Image();
+    qrCodeImg.src = qrCode.createDataURL(8, 0);
+    qrCodeImg.width = qrCodeSize;
+    qrCodeImg.height = qrCodeSize;
+
+    qrCodeContainer.innerHTML = '';
+    qrCodeContainer.appendChild(qrCodeImg);
+
+    qrCodeContainer.style.left = (canvas.getBoundingClientRect().left + (canvas.width - qrCodeSize) / 2) + 'px';
+}
+
+function hideQRCode() {
+    const qrCodeContainer = document.getElementById('qrCodeContainer');
+    qrCodeContainer.innerHTML = '';
 }
 
 function resetGame() {
@@ -99,6 +125,7 @@ function resetGame() {
     ballSpeedY = canvas.width / 150;
     hitCounter = 0;
     gameInProgress = true;
+    hideQRCode();
 }
 
 function handlePaddleMovement(clientX) {
