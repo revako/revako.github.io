@@ -1,6 +1,10 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+// Set canvas dimensions based on the device screen size
+canvas.width = window.innerWidth * 0.9;
+canvas.height = window.innerHeight * 0.8;
+
 const paddleHeight = 10;
 const paddleWidth = 100;
 const ballRadius = 5;
