@@ -3,33 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Circle and Lines Game</title>
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #b5e7a0;
-        }
-
-        canvas {
-            position: relative;
-            top: 5%;
-        }
-
-        #qrCodeContainer {
-            position: relative;
-            top: 25%;
-        }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.4.4/qrcode.min.js"></script>
+    <title>Ping Pong Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+  
 <body>
-    <canvas id="gameCanvas"></canvas>
-    <div id="qrCodeContainer" style="display: none;"></div>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <button id="shareButton" style="display:none;">Share Screenshot on LinkedIn</button>
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 </body>
 </html>
