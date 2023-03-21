@@ -84,8 +84,8 @@ function resetGame() {
     ballX = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius;
     ballY = canvas.height / 10;
 
-    ballSpeedX = 1;
-    ballSpeedY = 2.5;
+    ballSpeedX = canvas.width / 300;
+    ballSpeedY = canvas.width / 150;
     hitCounter = 0;
     gameInProgress = true;
 }
