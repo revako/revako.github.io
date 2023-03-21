@@ -132,3 +132,25 @@ function gameLoop() {
 }
 
 gameLoop();
+
+// Add this function to your JS file
+function resizeCanvas() {
+    const maxWidth = window.innerWidth * 0.9; // Set a maximum canvas width as 90% of the window width
+    const maxHeight = window.innerHeight * 0.9; // Set a maximum canvas height as 90% of the window height
+
+    const widthRatio = maxWidth / canvas.width;
+    const heightRatio = maxHeight / canvas.height;
+
+    const scale = Math.min(widthRatio, heightRatio);
+    const newWidth = canvas.width * scale;
+    const newHeight = canvas.height * scale;
+
+    canvas.style.width = newWidth + 'px';
+    canvas.style.height = newHeight + 'px';
+}
+
+// Call the resizeCanvas function when the window is resized
+window.addEventListener('resize', resizeCanvas);
+
+// Call the resizeCanvas function when the page loads
+resizeCanvas();
