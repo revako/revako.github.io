@@ -20,21 +20,21 @@ let hitCounter = 0;
 let gameInProgress = true;
 
 function draw() {
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = "lime";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "black";
     ctx.fillRect(topPaddleX, 0, paddleWidth, paddleHeight);
     ctx.fillRect(bottomPaddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
 
     ctx.beginPath();
     ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "black";
     ctx.fill();
     ctx.closePath();
 
     ctx.font = "20px Arial";
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "black";
     ctx.fillText("Hits: " + hitCounter, canvas.width / 2 - 45, canvas.height / 2 - 10);
 }
 
