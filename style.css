@@ -1,32 +1,14 @@
-html, body {
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
     margin: 0;
-    padding: 0;
-    height: 100%;
     background-color: #b5e7a0;
 }
-body {
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #b5e7a0;
-        }
+
 canvas {
     border: 1px solid black;
-    position: relative;
-            top: 5%;
-  left: center;
-        }
-
-#qrCodeContainer {
-     position: relative;
-            top: 25%;
-  left: center;
-        }
-
-#gameCanvas {
     position: absolute;
     top: 5%;
 }
