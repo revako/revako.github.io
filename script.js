@@ -179,8 +179,11 @@ function resizeCanvas() {
     bottomPaddleX = (canvas.width - paddleWidth) / 2;
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
-}
 
+    // Update the canvas style to fit within the phone's display size
+    canvas.style.width = canvas.width + 'px';
+    canvas.style.height = canvas.height + 'px';
+}
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
