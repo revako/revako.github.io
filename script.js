@@ -1,21 +1,17 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-
 let paddleHeight;
 let paddleWidth;
 let ballRadius;
-
 let topPaddleX;
 let bottomPaddleX;
 let ballX;
 let ballY;
 let ballSpeedX;
 let ballSpeedY;
-
 let hitCounter = 0;
 let gameInProgress = true;
-
 let lastFrameTime = performance.now();
 
 function draw() {
@@ -185,9 +181,7 @@ function gameLoop(currentTime) {
     requestAnimationFrame(gameLoop);
 }
 
-
 gameLoop(lastFrameTime);
-
 
 function updateDimensions() {
     paddleWidth = canvas.width / 4;
@@ -219,12 +213,10 @@ function resizeCanvas() {
     ballX = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius;
     ballY = canvas.height / 10;
 
-
     // Update the canvas style to fit within the phone's display size
     canvas.style.width = canvas.width + 'px';
     canvas.style.height = canvas.height + 'px';
 }
-
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
