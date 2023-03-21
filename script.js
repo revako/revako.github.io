@@ -1,6 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+
 let paddleHeight;
 let paddleWidth;
 let ballRadius;
@@ -137,7 +138,7 @@ canvas.addEventListener("touchmove", (event) => {
     handlePaddleMovement(touch.clientX);
 });
 
-canvas.addEventListener("click", () => {
+document.addEventListener("click", () => {
     if (!gameInProgress) {
         resetGame();
     }
