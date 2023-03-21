@@ -2,7 +2,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth * 1;
-canvas.height = window.innerHeight * 0.6;
+canvas.height = window.innerHeight * 0.8;
 
 const paddleHeight = 10;
 const paddleWidth = 100;
@@ -86,8 +86,8 @@ function stopGame() {
 function resetGame() {
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
-    ballSpeedX = 1;
-    ballSpeedY = 2.5;
+    ballSpeedX = 2;
+    ballSpeedY = 5;
     hitCounter = 0;
     gameInProgress = true;
 }
