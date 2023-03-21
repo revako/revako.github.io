@@ -1,5 +1,8 @@
-html {
-        background-color: #b5e7a0;
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #b5e7a0;
 }
 body {
             margin: 0;
@@ -12,15 +15,15 @@ body {
         }
 canvas {
     border: 1px solid black;
-    align-items: center;
     position: relative;
             top: 5%;
+  left: center;
         }
 
 #qrCodeContainer {
      position: relative;
-     align-items: center;
             top: 25%;
+  left: center;
         }
 
 #gameCanvas {
