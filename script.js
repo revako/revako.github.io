@@ -154,6 +154,7 @@ function gameLoop(currentTime) {
     requestAnimationFrame(gameLoop);
 }
 
+
 gameLoop(lastFrameTime);
 
 
