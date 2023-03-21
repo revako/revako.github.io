@@ -139,7 +139,6 @@ function resizeCanvas() {
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
     ballSpeedY = canvas.height / 2;
-    canvas.style.marginTop = "10px"; // Add a margin to the top of the canvas
 }
 
 window.addEventListener('resize', resizeCanvas);
