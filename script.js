@@ -129,7 +129,7 @@ function gameLoop() {
 gameLoop();
 
 function resizeCanvas() {
-    const maxWidth = window.innerWidth * 1;
+    const maxWidth = window.innerWidth;
     const maxHeight = window.innerHeight * 0.6;
 
     const widthRatio = maxWidth / canvas.width;
