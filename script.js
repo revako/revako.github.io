@@ -1,10 +1,8 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Set canvas dimensions based on the device screen size
-const minSide = Math.min(window.innerWidth, window.innerHeight);
-canvas.width = minSide;
-canvas.height = minSide;
+canvas.width = window.innerWidth * 0.9;
+canvas.height = window.innerHeight * 0.8;
 
 const paddleHeight = 10;
 const paddleWidth = 100;
@@ -139,6 +137,10 @@ function resizeCanvas() {
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
     ballSpeedY = canvas.height / 2;
+
+    // Center the canvas horizontally
+    const leftOffset = (window.innerWidth - canvas.width) / 2;
+    canvas.style.left = leftOffset + 'px';
 }
 
 window.addEventListener('resize', resizeCanvas);
