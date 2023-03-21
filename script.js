@@ -103,6 +103,31 @@ function handlePaddleMovement(clientX) {
     }
 }
 
+function handleTap(event) {
+    if (!gameInProgress) {
+        resetGame();
+    }
+}
+
+// Remove the existing event listeners on the canvas
+canvas.removeEventListener("mousemove", handlePaddleMovement);
+canvas.removeEventListener("touchmove", handlePaddleMovement);
+canvas.removeEventListener("click", handleTap);
+
+// Add event listeners to the entire window
+window.addEventListener("mousemove", (event) => {
+    handlePaddleMovement(event.clientX);
+});
+
+window.addEventListener("touchmove", (event) => {
+    event.preventDefault();
+    const touch = event.touches[0];
+    handlePaddleMovement(touch.clientX);
+});
+
+window.addEventListener("click", handleTap);
+
+
 canvas.addEventListener("mousemove", (event) => {
     handlePaddleMovement(event.clientX);
 });
