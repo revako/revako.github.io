@@ -15,6 +15,8 @@ let ballSpeedY;
 let hitCounter = 0;
 let gameInProgress = true;
 
+let lastFrameTime = performance.now();
+
 function draw() {
     ctx.fillStyle = "#b5e7a0";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -40,9 +42,9 @@ function draw() {
     ctx.fillText("Score: " + hitCounter, canvas.width / 2 - 90, canvas.height / 2 - 10);
 }
 
-function move() {
-    ballX += ballSpeedX;
-    ballY += ballSpeedY;
+function move(elapsedTime) {
+    ballX += ballSpeedX * elapsedTime;
+    ballY += ballSpeedY * elapsedTime;
 
     if (ballX > canvas.width - ballRadius || ballX < ballRadius) {
         ballSpeedX = -ballSpeedX;
@@ -141,15 +143,19 @@ canvas.addEventListener("click", () => {
     }
 });
 
-function gameLoop() {
+function gameLoop(currentTime) {
+    const elapsedTime = (currentTime - lastFrameTime) / 15;
+    lastFrameTime = currentTime;
+
     draw();
     if (gameInProgress) {
-        move();
+        move(elapsedTime);
     }
     requestAnimationFrame(gameLoop);
 }
 
-gameLoop();
+gameLoop(lastFrameTime);
+
 
 function updateDimensions() {
     paddleWidth = canvas.width / 4;
