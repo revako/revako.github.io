@@ -1,14 +1,15 @@
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Change from center to flex-start */
     height: 100vh;
     margin: 0;
+    padding: 0; /* Add padding 0 */
     background-color: #b5e7a0;
 }
 
 canvas {
     border: 1px solid black;
-    max-width: 100%; /* Limit canvas width to 100% of the container width */
-    max-height: 100%; /* Limit canvas height to 100% of the container height */
+    max-width: 100%;
+    max-height: 100%;
 }
