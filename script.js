@@ -1,16 +1,12 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth * 0.95;
-canvas.height = window.innerHeight * 0.5;
+canvas.width = window.innerWidth * 1;
+canvas.height = window.innerHeight * 0.6;
 
-const initialPaddleHeight = 10;
-const initialPaddleWidth = 100;
-const initialBallRadius = 5;
-
-let paddleHeight = initialPaddleHeight;
-let paddleWidth = initialPaddleWidth;
-let ballRadius = initialBallRadius;
+const paddleHeight = 10;
+const paddleWidth = 100;
+const ballRadius = 5;
 
 let topPaddleX = (canvas.width - paddleWidth) / 2;
 let bottomPaddleX = (canvas.width - paddleWidth) / 2;
@@ -90,8 +86,8 @@ function stopGame() {
 function resetGame() {
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
-    ballSpeedX = 2;
-    ballSpeedY = 5;
+    ballSpeedX = 1;
+    ballSpeedY = 2.5;
     hitCounter = 0;
     gameInProgress = true;
 }
@@ -133,26 +129,18 @@ function gameLoop() {
 gameLoop();
 
 function resizeCanvas() {
-    const maxHeight = window.innerHeight * 0.5;
-    const maxWidth = window.innerWidth;
+    const maxWidth = window.innerWidth * 1;
+    const maxHeight = window.innerHeight * 0.6;
 
-    const size = Math.min(maxHeight, maxWidth);
-    const scaleFactor = size / canvas.height;
+    const widthRatio = maxWidth / canvas.width;
+    const heightRatio = maxHeight / canvas.height;
 
-    canvas.width = size;
-    canvas.height = size;
+    const scale = Math.min(widthRatio, heightRatio);
+    const newWidth = canvas.width * scale;
+    const newHeight = canvas.height * scale;
 
-    canvas.style.width = size + 'px';
-    canvas.style.height = size + 'px';
-
-    paddleHeight = initialPaddleHeight * scaleFactor;
-    paddleWidth = initialPaddleWidth * scaleFactor;
-    ballRadius = initialBallRadius * scaleFactor;
-
-    topPaddleX = (canvas.width - paddleWidth) / 2;
-    bottomPaddleX = (canvas.width - paddleWidth) / 2;
-    ballX = canvas.width / 2;
-    ballY = canvas.height / 2;
+    canvas.style.width = newWidth + 'px';
+    canvas.style.height = newHeight + 'px';
 }
 
 window.addEventListener('resize', resizeCanvas);
