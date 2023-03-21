@@ -4,9 +4,21 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #222;
+    background-color: lime;
 }
 
 canvas {
-    border: 1px solid #fff;
+    border: 1px solid black;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    canvas {
+        margin: 0 auto;
+    }
 }
