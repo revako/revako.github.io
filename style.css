@@ -1,7 +1,7 @@
 body {
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Change from center to flex-start */
+    align-items: flex-start;
     height: 100vh;
     margin: 0;
     background-color: #b5e7a0;
@@ -9,5 +9,6 @@ body {
 
 canvas {
     border: 1px solid black;
-    margin-top: 10px; /* Add a margin to the top of the canvas */
+    position: absolute;
+    top: 0;
 }
