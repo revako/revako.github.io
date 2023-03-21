@@ -1,21 +1,17 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-
 let paddleHeight;
 let paddleWidth;
 let ballRadius;
-
 let topPaddleX;
 let bottomPaddleX;
 let ballX;
 let ballY;
 let ballSpeedX;
 let ballSpeedY;
-
 let hitCounter = 0;
 let gameInProgress = true;
-
 let lastFrameTime = performance.now();
 
 function draw() {
@@ -49,6 +45,26 @@ function draw() {
         const titleTextWidth = ctx.measureText(titleText).width;
         ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 50);
     }
+}
+
+function showQRCode() {
+    const qrCodeContainer = document.getElementById("qrCodeContainer");
+    if (qrCodeContainer.childElementCount === 0) {
+        const qrCodeCanvas = document.createElement("canvas");
+        QRCode.toCanvas(qrCodeCanvas, "https://revako.github.io", { width: canvas.width / 2 }, (error) => {
+            if (error) {
+                console.error(error);
+            } else {
+                qrCodeContainer.appendChild(qrCodeCanvas);
+            }
+        });
+    }
+    qrCodeContainer.style.display = "block";
+}
+
+function hideQRCode() {
+    const qrCodeContainer = document.getElementById("qrCodeContainer");
+    qrCodeContainer.style.display = "none";
 }
 
 function move(elapsedTime) {
@@ -89,6 +105,7 @@ function increaseBallSpeed() {
 
 function stopGame() {
     gameInProgress = false;
+    showQRCode();
 }
 
 function resetGame() {
@@ -99,6 +116,7 @@ function resetGame() {
     ballSpeedY = canvas.width / 150;
     hitCounter = 0;
     gameInProgress = true;
+    hideQRCode();
 }
 
 function handlePaddleMovement(clientX) {
@@ -163,9 +181,7 @@ function gameLoop(currentTime) {
     requestAnimationFrame(gameLoop);
 }
 
-
 gameLoop(lastFrameTime);
-
 
 function updateDimensions() {
     paddleWidth = canvas.width / 4;
@@ -197,12 +213,10 @@ function resizeCanvas() {
     ballX = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius;
     ballY = canvas.height / 10;
 
-
     // Update the canvas style to fit within the phone's display size
     canvas.style.width = canvas.width + 'px';
     canvas.style.height = canvas.height + 'px';
 }
-
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
