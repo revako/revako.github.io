@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title>Rock Paper Scissors</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Pong Game</title>
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div class="container">
-      <h1>Rock Paper Scissors</h1>
-      <div class="game">
-        <div class="choices">
-          <button id="rock-button">&#x1F5FF;</button>
-          <button id="paper-button">&#x1F4DC;</button>
-          <button id="scissors-button">&#x2702;</button>
-        </div>
-        <div class="result"></div>
-      </div>
-    </div>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <button id="shareButton" style="display:none;">Share Screenshot on LinkedIn</button>
     <script src="script.js"></script>
-  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+
+</body>
 </html>
