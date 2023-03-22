@@ -198,12 +198,12 @@ function resizeCanvas() {
     const aspectRatio = window.innerWidth / window.innerHeight;
     let size;
 
-    if (aspectRatio < 0.4) {
-        size = window.innerWidth;
+    if (aspectRatio < 0.5) {
+        size = window.innerWidth*0.92;
     } else {
-        size = Math.min(window.innerHeight / 2.5, window.innerWidth);
+        size = Math.min(window.innerHeight*0.46, window.innerWidth);
     }
-
+  
     canvas.width = size;
     canvas.height = size;
 
