@@ -45,9 +45,9 @@ function draw() {
     ctx.fillText(scoreText, (canvas.width - scoreTextWidth) / 2, canvas.height / 2 - 10);
 
     if (!gameInProgress) {
-        const titleText = "A circle and lines";
+        const titleText = "Paddle Pong Frenzy";
         const titleTextWidth = ctx.measureText(titleText).width;
-        ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 50);
+        ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 65);
     }
 }
 
