@@ -187,9 +187,9 @@ function gameLoop(currentTime) {
 gameLoop(lastFrameTime);
 
 function updateDimensions() {
-    paddleWidth = canvas.width / 3.8;
-    paddleHeight = canvas.width / 25;
-    ballRadius = canvas.width / 25;
+    paddleWidth = canvas.width / 4;
+    paddleHeight = canvas.width / 70;
+    ballRadius = canvas.width / 50;
     ballSpeedX = canvas.width / 300;
     ballSpeedY = canvas.width / 150;
 }
