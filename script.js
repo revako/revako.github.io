@@ -1,6 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-
+const qrCodeContainer = document.getElementById("qrCodeContainer");
 
 let paddleHeight;
 let paddleWidth;
@@ -94,7 +94,7 @@ function stopGame() {
 
 function displayQRCode() {
     const qrCodeContainer = document.getElementById('qrCodeContainer');
-    const qrCodeSize = canvas.width / 3;
+    const qrCodeSize = canvas.width;
     const qrCode = qrcode(0, 'L');
     const url = 'https://revako.github.io/';
 
@@ -144,12 +144,6 @@ function handleTap(event) {
     }
 }
 
-// Remove the existing event listeners on the canvas
-canvas.removeEventListener("mousemove", handlePaddleMovement);
-canvas.removeEventListener("touchmove", handlePaddleMovement);
-canvas.removeEventListener("click", handleTap);
-
-// Add event listeners to the entire window
 window.addEventListener("mousemove", (event) => {
     handlePaddleMovement(event.clientX);
 });
@@ -190,14 +184,12 @@ function gameLoop(currentTime) {
     requestAnimationFrame(gameLoop);
 }
 
-
 gameLoop(lastFrameTime);
 
-
 function updateDimensions() {
-    paddleWidth = canvas.width / 4;
-    paddleHeight = canvas.width / 40;
-    ballRadius = canvas.width / 80;
+    paddleWidth = canvas.width / 3.8;
+    paddleHeight = canvas.width / 25;
+    ballRadius = canvas.width / 25;
     ballSpeedX = canvas.width / 300;
     ballSpeedY = canvas.width / 150;
 }
@@ -206,12 +198,10 @@ function resizeCanvas() {
     const aspectRatio = window.innerWidth / window.innerHeight;
     let size;
 
-    if (aspectRatio < 0.5) {
-        // Portrait orientation, height is more than 2 times the width
+    if (aspectRatio < 0.4) {
         size = window.innerWidth;
     } else {
-        // Landscape orientation or height is less than 2 times the width
-        size = Math.min(window.innerHeight / 2, window.innerWidth);
+        size = Math.min(window.innerHeight / 2.5, window.innerWidth);
     }
 
     canvas.width = size;
@@ -224,12 +214,9 @@ function resizeCanvas() {
     ballX = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius;
     ballY = canvas.height / 10;
 
-
-    // Update the canvas style to fit within the phone's display size
     canvas.style.width = canvas.width + 'px';
     canvas.style.height = canvas.height + 'px';
 }
-
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
