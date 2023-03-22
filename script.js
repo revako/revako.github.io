@@ -57,6 +57,8 @@ function move(elapsedTime) {
 
     if (ballX > canvas.width - ballRadius || ballX < ballRadius) {
         ballSpeedX = -ballSpeedX;
+        // Add a small random horizontal speed to prevent the ball from getting stuck
+        ballSpeedX += (Math.random() - 0.5) * 0.1 * ballSpeedX;
     }
 
     if (ballY <= paddleHeight + ballRadius) {
