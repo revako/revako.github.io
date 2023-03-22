@@ -10,10 +10,10 @@ body {
 canvas {
     border: 1px solid black;
     position: absolute;
-    top: 5%;
+    top: 7%;
 }
 
 .qrCodeContainer {
     position: absolute;
-    bottom: 15%;
+    bottom: 6%;
 }
