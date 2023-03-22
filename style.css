@@ -13,7 +13,7 @@ canvas {
     top: 5%;
 }
 
-#qrCodeContainer {
+.qrCodeContainer {
     position: absolute;
-    bottom: 0%;
+    bottom: 5%;
 }
