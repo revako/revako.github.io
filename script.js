@@ -211,21 +211,38 @@ function hidePopup2() {
     popup2.style.display = 'none';
 }
 
-function updateHighScoresList() {
-    highScoresList.innerHTML = '';
-    highScores.slice(0, 20).forEach((score, index) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${index + 1}. ${score.name} - ${score.score}`;
-        highScoresList.appendChild(listItem);
+function createHighScoreList() {
+  const highScoresRef = firebase.database().ref('highScores').orderByChild('score').limitToLast(20);
+
+  highScoresRef.on('value', (snapshot) => {
+    highScores = [];
+    snapshot.forEach((childSnapshot) => {
+      highScores.push(childSnapshot.val());
     });
+
+    highScores.reverse();
+    updateHighScoresList();
+  });
+}
+
+function updateHighScoresList() {
+  highScoresList.innerHTML = '';
+  highScores.forEach((score, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${index + 1}. ${score.name} - ${score.score}`;
+    highScoresList.appendChild(listItem);
+  });
 }
 
 submitName.addEventListener('click', () => {
-    highScores.push({ name: nameInput.value, score: hitCounter });
-    highScores.sort((a, b) => b.score - a.score);
-    updateHighScoresList();
-    hidePopup1();
-    showPopup2();
+  const newScore = {
+    name: nameInput.value,
+    score: hitCounter,
+  };
+
+  firebase.database().ref('highScores').push(newScore);
+  hidePopup1();
+  showPopup2();
 });
 
 newGame.addEventListener('click', () => {
@@ -237,3 +254,4 @@ function stopGame() {
     gameInProgress = false;
     showPopup1();
 }
+createHighScoreList();
