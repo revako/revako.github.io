@@ -87,13 +87,8 @@ function increaseBallSpeed() {
     ballSpeedY *= 1.0125;
 }
 
-function showNameInput() {
-    document.getElementById("namePopup").classList.remove("hidden");
-}
-
 function stopGame() {
     gameInProgress = false;
-    showNameInput();
 }
 
 function resetGame() {
@@ -132,11 +127,8 @@ window.addEventListener("touchmove", (event) => {
     handlePaddleMovement(touch.clientX);
 });
 
-document.addEventListener("click", () => {
-    if (!gameInProgress) {
-        showNameInput();
-    }
-});
+window.addEventListener("click", handleTap);
+
 
 canvas.addEventListener("mousemove", (event) => {
     handlePaddleMovement(event.clientX);
@@ -153,22 +145,6 @@ document.addEventListener("click", () => {
         resetGame();
     }
 });
-
-document.getElementById("submitName").addEventListener("click", () => {
-    const name = document.getElementById("nameField").value;
-    const score = {
-        name: name,
-        score: hitCounter
-    };
-
-    let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-    highScores.push(score);
-    highScores.sort((a, b) => b.score - a.score);
-    highScores.splice(20);
-
-    localStorage.setItem("highScores", JSON.stringify(highScores));
-
-    document.getElementById("namePopup").classList.add("hidden");
 
 function gameLoop(currentTime) {
     const elapsedTime = (currentTime - lastFrameTime) / 15;
