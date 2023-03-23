@@ -6,9 +6,19 @@
     <title>Paddle Pong Frenzy</title>
     <link rel="stylesheet" href="style.css">
 </head>
-  
+
 <body>
     <canvas id="gameCanvas"></canvas>
+    <div id="popup1" class="popup">
+        <h2>Enter your name</h2>
+        <input type="text" id="nameInput">
+        <button id="submitName">Submit</button>
+    </div>
+    <div id="popup2" class="popup">
+        <h2>High Scores</h2>
+        <ol id="highScoresList"></ol>
+        <button id="newGame">New Game</button>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
