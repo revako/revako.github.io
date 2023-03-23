@@ -46,7 +46,7 @@ function draw() {
     if (!gameInProgress) {
         const titleText = "Paddle Pong Frenzy";
         const titleTextWidth = ctx.measureText(titleText).width;
-        ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 65);
+        ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 70);
     }
 }
 
@@ -128,9 +128,6 @@ window.addEventListener("touchmove", (event) => {
     handlePaddleMovement(touch.clientX);
 });
 
-window.addEventListener("click", handleTap);
-
-
 canvas.addEventListener("mousemove", (event) => {
     handlePaddleMovement(event.clientX);
 });
@@ -139,12 +136,6 @@ canvas.addEventListener("touchmove", (event) => {
     event.preventDefault();
     const touch = event.touches[0];
     handlePaddleMovement(touch.clientX);
-});
-
-document.addEventListener("click", () => {
-    if (!gameInProgress) {
-        resetGame();
-    }
 });
 
 function gameLoop(currentTime) {
@@ -194,3 +185,55 @@ function resizeCanvas() {
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
+
+const popup1 = document.getElementById('popup1');
+const popup2 = document.getElementById('popup2');
+const submitName = document.getElementById('submitName');
+const nameInput = document.getElementById('nameInput');
+const highScoresList = document.getElementById('highScoresList');
+const newGame = document.getElementById('newGame');
+
+let highScores = [];
+
+function showPopup1() {
+    popup1.style.display = 'block';
+}
+
+function hidePopup1() {
+    popup1.style.display = 'none';
+}
+
+function showPopup2() {
+    popup2.style.display = 'block';
+}
+
+function hidePopup2() {
+    popup2.style.display = 'none';
+}
+
+function updateHighScoresList() {
+    highScoresList.innerHTML = '';
+    highScores.slice(0, 20).forEach((score, index) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${index + 1}. ${score.name} - ${score.score}`;
+        highScoresList.appendChild(listItem);
+    });
+}
+
+submitName.addEventListener('click', () => {
+    highScores.push({ name: nameInput.value, score: hitCounter });
+    highScores.sort((a, b) => b.score - a.score);
+    updateHighScoresList();
+    hidePopup1();
+    showPopup2();
+});
+
+newGame.addEventListener('click', () => {
+    hidePopup2();
+    resetGame();
+});
+
+function stopGame() {
+    gameInProgress = false;
+    showPopup1();
+}
