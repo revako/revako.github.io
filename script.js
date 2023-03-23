@@ -212,17 +212,14 @@ function hidePopup2() {
 }
 
 function createHighScoreList() {
-  const highScoresRef = firebase.database().ref('highScores').orderByChild('score').limitToLast(20);
+  const highScoresRef = firebase.database().ref('highScores');
 
-  highScoresRef.on('value', (snapshot) => {
-    highScores = [];
-    snapshot.forEach((childSnapshot) => {
-      highScores.push(childSnapshot.val());
-    });
-
-    highScores.reverse();
-    updateHighScoresList();
-  });
+highScoresRef.on('value', (snapshot) => {
+  const highScoresData = snapshot.val();
+  highScores = Object.values(highScoresData || {});
+  highScores.sort((a, b) => b.score - a.score);
+  updateHighScoresList();
+});
 }
 
 function updateHighScoresList() {
