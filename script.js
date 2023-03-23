@@ -1,3 +1,20 @@
+const firebaseConfig = {
+  apiKey: "your_api_key",
+  authDomain: "your_auth_domain",
+  databaseURL: "your_database_url",
+  projectId: "your_project_id",
+  storageBucket: "your_storage_bucket",
+  messagingSenderId: "your_messaging_sender_id",
+  appId: "your_app_id",
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Sign in the user anonymously
+firebase.auth().signInAnonymously().catch((error) => {
+  console.error("Error signing in anonymously:", error);
+});
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
