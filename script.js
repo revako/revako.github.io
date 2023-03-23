@@ -1,7 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-
 let paddleHeight;
 let paddleWidth;
 let ballRadius;
@@ -47,7 +46,7 @@ function draw() {
     if (!gameInProgress) {
         const titleText = "Paddle Pong Frenzy";
         const titleTextWidth = ctx.measureText(titleText).width;
-        ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 50);
+        ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 65);
     }
 }
 
@@ -57,6 +56,8 @@ function move(elapsedTime) {
 
     if (ballX > canvas.width - ballRadius || ballX < ballRadius) {
         ballSpeedX = -ballSpeedX;
+        // Add a small random horizontal speed to prevent the ball from getting stuck
+        ballSpeedX += (Math.random() - 0.5) * 0.1 * ballSpeedX;
     }
 
     if (ballY <= paddleHeight + ballRadius) {
@@ -157,14 +158,12 @@ function gameLoop(currentTime) {
     requestAnimationFrame(gameLoop);
 }
 
-
 gameLoop(lastFrameTime);
-
 
 function updateDimensions() {
     paddleWidth = canvas.width / 4;
-    paddleHeight = canvas.width / 40;
-    ballRadius = canvas.width / 80;
+    paddleHeight = canvas.width / 70;
+    ballRadius = canvas.width / 50;
     ballSpeedX = canvas.width / 300;
     ballSpeedY = canvas.width / 150;
 }
@@ -174,11 +173,11 @@ function resizeCanvas() {
     let size;
 
     if (aspectRatio < 0.5) {
-        size = window.innerWidth*0.95;
+        size = window.innerWidth*0.92;
     } else {
-        size = Math.min(window.innerHeight*0.475, window.innerWidth);
+        size = Math.min(window.innerHeight*0.46, window.innerWidth);
     }
-
+  
     canvas.width = size;
     canvas.height = size;
 
@@ -189,11 +188,9 @@ function resizeCanvas() {
     ballX = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius;
     ballY = canvas.height / 10;
 
-    // Update the canvas style to fit within the phone's display size
     canvas.style.width = canvas.width + 'px';
     canvas.style.height = canvas.height + 'px';
 }
-
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
