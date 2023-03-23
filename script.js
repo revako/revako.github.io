@@ -231,13 +231,14 @@ function updateHighScoresList() {
   });
 }
 
-submitName.addEventListener('click', () => {
-  const newScore = {
-    name: nameInput.value,
-    score: hitCounter,
-  };
-
-  firebase.database().ref('highScores').push(newScore);
+submitName.addEventListener("click", () => {
+  const newScore = { name: nameInput.value, score: hitCounter };
+  highScores.push(newScore);
+  highScores.sort((a, b) => b.score - a.score);
+  highScores = highScores.slice(0, 20); // Keep only the top 20 scores
+  const highScoresRef = firebase.database().ref("highScores");
+  highScoresRef.set(highScores);
+  updateHighScoresList();
   hidePopup1();
   showPopup2();
 });
