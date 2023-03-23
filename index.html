@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Add this at the top of your HTML file, inside the <head> tag -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script>
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+  apiKey: "AIzaSyCsuukzzMzwUN27majJIa_6cZ4uNoBWwcM",
+  authDomain: "paddle-pong-frenzy.firebaseapp.com",
+  databaseURL: "https://paddle-pong-frenzy-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "paddle-pong-frenzy",
+  storageBucket: "paddle-pong-frenzy.appspot.com",
+  messagingSenderId: "711791029629",
+  appId: "1:711791029629:web:f1aa0a643aee8a279fb014",
+  measurementId: "G-491YGM3LLY"
+};
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paddle Pong Frenzy</title>
@@ -11,12 +29,12 @@
     <canvas id="gameCanvas"></canvas>
     <div id="popup1" class="popup">
         <h2>Enter your name</h2>
-        <input type="text" id="nameInput">
-        <button id="submitName">Submit</button>
+        <input type="text" id="nameInput" placeholder="Your name" maxlength="15">
+        <button id="submitName" style="margin-top: 20px;">Submit</button>
     </div>
     <div id="popup2" class="popup">
         <h2>High Scores</h2>
-        <ol id="highScoresList"></ol>
+        <ul id="highScoresList" class="high-scores-list"></ul>
         <button id="newGame">New Game</button>
     </div>
     <script src="script.js"></script>
