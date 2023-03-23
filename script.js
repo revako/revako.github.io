@@ -1,16 +1,16 @@
 const firebaseConfig = {
-  apiKey: "your_api_key",
-  authDomain: "your_auth_domain",
-  databaseURL: "your_database_url",
-  projectId: "your_project_id",
-  storageBucket: "your_storage_bucket",
-  messagingSenderId: "your_messaging_sender_id",
-  appId: "your_app_id",
+  apiKey: "AIzaSyCsuukzzMzwUN27majJIa_6cZ4uNoBWwcM",
+  authDomain: "paddle-pong-frenzy.firebaseapp.com",
+  databaseURL: "https://paddle-pong-frenzy-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "paddle-pong-frenzy",
+  storageBucket: "paddle-pong-frenzy.appspot.com",
+  messagingSenderId: "711791029629",
+  appId: "1:711791029629:web:f1aa0a643aee8a279fb014",
+  measurementId: "G-491YGM3LLY"
 };
 
 firebase.initializeApp(firebaseConfig);
 
-// Sign in the user anonymously
 firebase.auth().signInAnonymously().catch((error) => {
   console.error("Error signing in anonymously:", error);
 });
