@@ -6,12 +6,14 @@
     <title>Paddle Pong Frenzy</title>
     <link rel="stylesheet" href="style.css">
 </head>
-  
 <body>
-    <canvas id="gameCanvas"></canvas>
-    <div class="qrCodeContainer" id="qrCodeContainer"></div>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <div id="namePopup" class="hidden">
+        <h2>Enter Your Name</h2>
+        <input type="text" id="nameField" />
+        <button id="submitName">Submit</button>
+        <p><a href="highscores.html">View High Scores</a></p>
+    </div>
     <script src="script.js"></script>
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 </body>
 </html>

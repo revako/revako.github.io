@@ -1,6 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-const qrCodeContainer = document.getElementById("qrCodeContainer");
+
 
 let paddleHeight;
 let paddleWidth;
@@ -47,7 +47,7 @@ function draw() {
     if (!gameInProgress) {
         const titleText = "Paddle Pong Frenzy";
         const titleTextWidth = ctx.measureText(titleText).width;
-        ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 65);
+        ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 50);
     }
 }
 
@@ -57,8 +57,6 @@ function move(elapsedTime) {
 
     if (ballX > canvas.width - ballRadius || ballX < ballRadius) {
         ballSpeedX = -ballSpeedX;
-        // Add a small random horizontal speed to prevent the ball from getting stuck
-        ballSpeedX += (Math.random() - 0.5) * 0.1 * ballSpeedX;
     }
 
     if (ballY <= paddleHeight + ballRadius) {
@@ -89,34 +87,13 @@ function increaseBallSpeed() {
     ballSpeedY *= 1.0125;
 }
 
+function showNameInput() {
+    document.getElementById("namePopup").classList.remove("hidden");
+}
+
 function stopGame() {
     gameInProgress = false;
-    displayQRCode();
-}
-
-function displayQRCode() {
-    const qrCodeContainer = document.getElementById('qrCodeContainer');
-    const qrCodeSize = canvas.width;
-    const qrCode = qrcode(0, 'L');
-    const url = 'https://revako.github.io/';
-
-    qrCode.addData(url);
-    qrCode.make();
-
-    const qrCodeImg = new Image();
-    qrCodeImg.src = qrCode.createDataURL(8, 0);
-    qrCodeImg.width = qrCodeSize;
-    qrCodeImg.height = qrCodeSize;
-
-    qrCodeContainer.innerHTML = '';
-    qrCodeContainer.appendChild(qrCodeImg);
-
-    qrCodeContainer.style.left = (canvas.getBoundingClientRect().left + (canvas.width - qrCodeSize) / 2) + 'px';
-}
-
-function hideQRCode() {
-    const qrCodeContainer = document.getElementById('qrCodeContainer');
-    qrCodeContainer.innerHTML = '';
+    showNameInput();
 }
 
 function resetGame() {
@@ -127,7 +104,6 @@ function resetGame() {
     ballSpeedY = canvas.width / 150;
     hitCounter = 0;
     gameInProgress = true;
-    hideQRCode();
 }
 
 function handlePaddleMovement(clientX) {
@@ -156,8 +132,11 @@ window.addEventListener("touchmove", (event) => {
     handlePaddleMovement(touch.clientX);
 });
 
-window.addEventListener("click", handleTap);
-
+document.addEventListener("click", () => {
+    if (!gameInProgress) {
+        showNameInput();
+    }
+});
 
 canvas.addEventListener("mousemove", (event) => {
     handlePaddleMovement(event.clientX);
@@ -175,6 +154,22 @@ document.addEventListener("click", () => {
     }
 });
 
+document.getElementById("submitName").addEventListener("click", () => {
+    const name = document.getElementById("nameField").value;
+    const score = {
+        name: name,
+        score: hitCounter
+    };
+
+    let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+    highScores.push(score);
+    highScores.sort((a, b) => b.score - a.score);
+    highScores.splice(20);
+
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+
+    document.getElementById("namePopup").classList.add("hidden");
+
 function gameLoop(currentTime) {
     const elapsedTime = (currentTime - lastFrameTime) / 15;
     lastFrameTime = currentTime;
@@ -186,12 +181,14 @@ function gameLoop(currentTime) {
     requestAnimationFrame(gameLoop);
 }
 
+
 gameLoop(lastFrameTime);
+
 
 function updateDimensions() {
     paddleWidth = canvas.width / 4;
-    paddleHeight = canvas.width / 70;
-    ballRadius = canvas.width / 50;
+    paddleHeight = canvas.width / 40;
+    ballRadius = canvas.width / 80;
     ballSpeedX = canvas.width / 300;
     ballSpeedY = canvas.width / 150;
 }
@@ -201,11 +198,11 @@ function resizeCanvas() {
     let size;
 
     if (aspectRatio < 0.5) {
-        size = window.innerWidth*0.92;
+        size = window.innerWidth*0.95;
     } else {
-        size = Math.min(window.innerHeight*0.46, window.innerWidth);
+        size = Math.min(window.innerHeight*0.475, window.innerWidth);
     }
-  
+
     canvas.width = size;
     canvas.height = size;
 
@@ -216,9 +213,11 @@ function resizeCanvas() {
     ballX = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius;
     ballY = canvas.height / 10;
 
+    // Update the canvas style to fit within the phone's display size
     canvas.style.width = canvas.width + 'px';
     canvas.style.height = canvas.height + 'px';
 }
+
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
