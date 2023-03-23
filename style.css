@@ -12,3 +12,20 @@ canvas {
     position: absolute;
     top: 2%;
 }
+
+.popup {
+    display: none;
+    position: absolute;
+    background-color: yellow;
+    border: 1px solid black;
+    padding: 30px;
+    text-align: center;
+    z-index: 10;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+#highScoresList {
+    padding: 0;
+}
