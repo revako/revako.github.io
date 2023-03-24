@@ -18,12 +18,13 @@ canvas {
     position: absolute;
     background-color: yellow;
     border: 1px solid black;
-    padding: 20px;
+    padding: 4%;
     text-align: center;
     z-index: 10;
     bottom: 10%;
     left: 50%;
     transform: translate(-50%, 0%);
+  width: 88%;
 }
 
 #highScoresList {
