@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Add this at the top of your HTML file, inside the <head> tag -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script>
-  // Your web app's Firebase configuration
   const firebaseConfig = {
-  apiKey: "AIzaSyCsuukzzMzwUN27majJIa_6cZ4uNoBWwcM",
-  authDomain: "paddle-pong-frenzy.firebaseapp.com",
-  databaseURL: "https://paddle-pong-frenzy-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "paddle-pong-frenzy",
-  storageBucket: "paddle-pong-frenzy.appspot.com",
-  messagingSenderId: "711791029629",
-  appId: "1:711791029629:web:f1aa0a643aee8a279fb014",
-  measurementId: "G-491YGM3LLY"
-};
-  // Initialize Firebase
+    apiKey: "AIzaSyCsuukzzMzwUN27majJIa_6cZ4uNoBWwcM",
+    authDomain: "paddle-pong-frenzy.firebaseapp.com",
+    databaseURL: "https://paddle-pong-frenzy-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "paddle-pong-frenzy",
+    storageBucket: "paddle-pong-frenzy.appspot.com",
+    messagingSenderId: "711791029629",
+    appId: "1:711791029629:web:f1aa0a643aee8a279fb014",
+    measurementId: "G-491YGM3LLY"
+  };
   firebase.initializeApp(firebaseConfig);
+
+  firebase.auth().signInAnonymously()
+    .catch((error) => {
+      console.error('Error signing in anonymously:', error);
+  });
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
