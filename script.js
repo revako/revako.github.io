@@ -1,20 +1,3 @@
-const firebaseConfig = {
-  apiKey: "AIzaSyCsuukzzMzwUN27majJIa_6cZ4uNoBWwcM",
-  authDomain: "paddle-pong-frenzy.firebaseapp.com",
-  databaseURL: "https://paddle-pong-frenzy-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "paddle-pong-frenzy",
-  storageBucket: "paddle-pong-frenzy.appspot.com",
-  messagingSenderId: "711791029629",
-  appId: "1:711791029629:web:f1aa0a643aee8a279fb014",
-  measurementId: "G-491YGM3LLY"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-firebase.auth().signInAnonymously().catch((error) => {
-  console.error("Error signing in anonymously:", error);
-});
-
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -65,11 +48,6 @@ function draw() {
         const titleTextWidth = ctx.measureText(titleText).width;
         ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 70);
     }
-}
-
-function saveHighScoreToDatabase(name, score) {
-  const scoreRef = firebase.database().ref('highScores').push();
-  scoreRef.set({ name, score });
 }
 
 function move(elapsedTime) {
@@ -234,14 +212,17 @@ function hidePopup2() {
 }
 
 function createHighScoreList() {
-  const highScoresRef = firebase.database().ref('highScores');
+  const highScoresRef = firebase.database().ref('highScores').orderByChild('score').limitToLast(20);
 
-highScoresRef.on('value', (snapshot) => {
-  const highScoresData = snapshot.val();
-  highScores = Object.values(highScoresData || {});
-  highScores.sort((a, b) => b.score - a.score);
-  updateHighScoresList();
-});
+  highScoresRef.on('value', (snapshot) => {
+    highScores = [];
+    snapshot.forEach((childSnapshot) => {
+      highScores.push(childSnapshot.val());
+    });
+
+    highScores.reverse();
+    updateHighScoresList();
+  });
 }
 
 function updateHighScoresList() {
@@ -254,14 +235,12 @@ function updateHighScoresList() {
 }
 
 submitName.addEventListener('click', () => {
-  const name = nameInput.value;
+  const newScore = {
+    name: nameInput.value,
+    score: hitCounter,
+  };
 
-  // Save the high score to the Firebase Realtime Database
-  saveHighScoreToDatabase(name, hitCounter);
-
-  highScores.push({ name, score: hitCounter });
-  highScores.sort((a, b) => b.score - a.score);
-  updateHighScoresList();
+  firebase.database().ref('highScores').push(newScore);
   hidePopup1();
   showPopup2();
 });
