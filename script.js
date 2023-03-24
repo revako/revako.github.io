@@ -69,7 +69,13 @@ function draw() {
 
 function saveHighScoreToDatabase(name, score) {
   const scoreRef = firebase.database().ref('highScores').push();
-  scoreRef.set({ name, score });
+  scoreRef.set({ name, score }, (error) => {
+    if (error) {
+      console.error("Error saving high score:", error);
+    } else {
+      console.log("High score saved with key:", scoreRef.key);
+    }
+  });
 }
 
 function move(elapsedTime) {
