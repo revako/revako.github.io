@@ -10,7 +10,7 @@ body {
 canvas {
     border: 1px solid black;
     position: absolute;
-    top: 4%;
+    top: 8%;
 }
 
 .popup {
@@ -18,21 +18,21 @@ canvas {
     position: absolute;
     background-color: yellow;
     border: 1px solid black;
-    padding: 4%;
+    padding: 2%;
     text-align: center;
     z-index: 10;
-    bottom: 10%;
+    bottom: 8%;
     left: 50%;
     transform: translate(-50%, 0%);
-  width: 88%;
+  width: 82%;
 }
 
 #bestPlayer {
-    position: center;
-    top: 10%;
-    left: 0%;
+    position: absolute;
+    top: 2%;
     font-size: 18px;
     text-align: center;
+    font-family: Arial, sans-serif; /* Add this line */
 }
 
 #highScoresList {
