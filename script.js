@@ -227,25 +227,11 @@ function createHighScoreList() {
 
 function updateHighScoresList() {
   highScoresList.innerHTML = '';
-  
-  const column1 = document.createElement('div');
-  const column2 = document.createElement('div');
-  column1.classList.add('column');
-  column2.classList.add('column');
-  
   highScores.forEach((score, index) => {
     const listItem = document.createElement('li');
     listItem.textContent = `${index + 1}. ${score.name} - ${score.score}`;
-
-    if (index < 10) {
-      column1.appendChild(listItem);
-    } else {
-      column2.appendChild(listItem);
-    }
+    highScoresList.appendChild(listItem);
   });
-
-  highScoresList.appendChild(column1);
-  highScoresList.appendChild(column2);
 }
 
 submitName.addEventListener('click', () => {
