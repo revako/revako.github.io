@@ -18,15 +18,13 @@ canvas {
     position: absolute;
     background-color: yellow;
     border: 1px solid black;
-    padding: 2%;
+    padding: 6%;
     text-align: center;
     z-index: 10;
-    bottom: 5%;
+    bottom: 10%;
     left: 50%;
     transform: translate(-50%, 0%);
-    width: 87%; /* Adjust this value to your preferred width */
-    max-width: 500px; /* Set a maximum width to prevent the popup from becoming too wide on large screens */
-    box-sizing: border-box;
+  width: 75%;
 }
 
 .high-scores-list {
@@ -55,5 +53,5 @@ canvas {
     list-style: none;
     padding: 0px;
     white-space: nowrap;
-    font-size: 14px;
+    font-size: 14px; /* Adjust the font size to your preference */
 }
