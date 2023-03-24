@@ -56,7 +56,6 @@ function move(elapsedTime) {
 
     if (ballX > canvas.width - ballRadius || ballX < ballRadius) {
         ballSpeedX = -ballSpeedX;
-        // Add a small random horizontal speed to prevent the ball from getting stuck
         ballSpeedX += (Math.random() - 0.5) * 0.1 * ballSpeedX;
     }
 
@@ -67,7 +66,11 @@ function move(elapsedTime) {
             hitCounter++;
             ballY = paddleHeight + ballRadius + 1;
         } else if (ballY < 0) {
-            stopGame();
+            if (hitCounter === 0) {
+                stopGameWithZeroPoints();
+            } else {
+                stopGame();
+            }
         }
     }
 
@@ -78,7 +81,11 @@ function move(elapsedTime) {
             hitCounter++;
             ballY = canvas.height - paddleHeight - ballRadius - 1;
         } else if (ballY > canvas.height) {
-            stopGame();
+            if (hitCounter === 0) {
+                stopGameWithZeroPoints();
+            } else {
+                stopGame();
+            }
         }
     }
 }
@@ -90,6 +97,16 @@ function increaseBallSpeed() {
 
 function stopGame() {
     gameInProgress = false;
+    if (hitCounter === 0) {
+        showPopup2();
+    } else {
+        showPopup1();
+    }
+}
+
+function stopGameWithZeroPoints() {
+    gameInProgress = false;
+    showPopup2();
 }
 
 function resetGame() {
@@ -108,7 +125,7 @@ function handlePaddleMovement(clientX) {
 
     if (newPaddleX >= 0 && newPaddleX <= canvas.width - paddleWidth) {
         bottomPaddleX = newPaddleX;
-        topPaddleX = canvas.width - newPaddleX - paddleWidth; // Top paddle moves reversely
+        topPaddleX = canvas.width - newPaddleX - paddleWidth;
     }
 }
 
@@ -222,7 +239,6 @@ function createHighScoreList() {
 
     highScores.reverse();
     updateHighScoresList();
-    // Assuming you have fetched the high scores in an array called 'highScores'
 const bestPlayerElement = document.getElementById('bestPlayer');
 bestPlayerElement.innerHTML = `Best player - ${highScores[0].name}`;
 
@@ -238,15 +254,23 @@ function updateHighScoresList() {
   });
 }
 
-submitName.addEventListener('click', () => {
-  const newScore = {
-    name: nameInput.value,
-    score: hitCounter,
-  };
+submitName.addEventListener("click", () => {
+  const user = firebase.auth().currentUser;
+  if (user) {
+    const newScore = {
+      name: nameInput.value,
+      score: hitCounter,
+    };
 
-  firebase.database().ref('highScores').push(newScore);
-  hidePopup1();
-  showPopup2();
+    firebase
+      .database()
+      .ref("highScores")
+      .push(newScore);
+    hidePopup1();
+    showPopup2();
+  } else {
+    console.error("User not authenticated");
+  }
 });
 
 newGame.addEventListener('click', () => {
