@@ -18,24 +18,27 @@ canvas {
     position: absolute;
     background-color: yellow;
     border: 1px solid black;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     z-index: 10;
-    bottom: 10%;
+    bottom: 2%;
     left: 50%;
     transform: translate(-50%, 0%);
+    width: 80%; /* Set the width to 80% of the available screen width */
 }
 
 #highScoresList {
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-    padding: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0px;
+  justify-content: space-between;
 }
 
 #highScoresList li {
-    width: 100%;
-    padding: 0px 0px;
+  width: calc(50% - 10px); /* Subtracting 10px to account for the space between the columns */
+  padding: 0px 0px;
+  box-sizing: border-box;
 }
 
 .high-scores-list {
