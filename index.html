@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-database-compat.js"></script>
-
+  <!-- Add this at the top of your HTML file, inside the <head> tag -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 <script>
+  // Your web app's Firebase configuration
   const firebaseConfig = {
   apiKey: "AIzaSyCsuukzzMzwUN27majJIa_6cZ4uNoBWwcM",
   authDomain: "paddle-pong-frenzy.firebaseapp.com",
@@ -16,6 +16,7 @@
   appId: "1:711791029629:web:f1aa0a643aee8a279fb014",
   measurementId: "G-491YGM3LLY"
 };
+  // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 </script>
     <meta charset="UTF-8">
@@ -31,6 +32,7 @@
         <input type="text" id="nameInput" placeholder="Your name" maxlength="15">
         <button id="submitName" style="margin-top: 20px;">Submit</button>
     </div>
+  <div id="bestPlayer">Best player - </div>
     <div id="popup2" class="popup">
         <h2>High Scores</h2>
         <ul id="highScoresList" class="high-scores-list"></ul>
