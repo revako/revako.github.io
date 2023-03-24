@@ -254,4 +254,5 @@ function stopGame() {
     gameInProgress = false;
     showPopup1();
 }
+
 createHighScoreList();
