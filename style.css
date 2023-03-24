@@ -21,7 +21,7 @@ canvas {
     padding: 2%;
     text-align: center;
     z-index: 10;
-    bottom: 15%;
+    bottom: 10%;
     left: 50%;
     transform: translate(-50%, 0%);
   width: 78%;
