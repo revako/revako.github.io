@@ -27,37 +27,31 @@ canvas {
   width: 88%;
 }
 
-#highScoresList {
+.high-scores-list {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 20px;
+    box-sizing: border-box; /* Add this line to include padding in the total width calculation */
+    max-width: calc(50% - 10px); /* Add this line to limit the width of each column */
+}
+
+.column:last-child {
+    padding-right: 0;
+}
+
+.column li {
     list-style: none;
     padding: 0px;
-}
-
-#highScoresList li {
-    width: 100%;
-    padding: 0px 0px;
-}
-
-.high-scores-list {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-th,
-td {
-    border: 1px solid black;
-    text-align: center;
-    padding: 5px;
-}
-
-th {
-    background-color: #f2f2f2;
+    white-space: nowrap;
+    font-size: 14px; /* Adjust the font size to your preference */
 }
