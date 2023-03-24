@@ -57,6 +57,11 @@ function move(elapsedTime) {
     if (ballX > canvas.width - ballRadius || ballX < ballRadius) {
         ballSpeedX = -ballSpeedX;
         ballSpeedX += (Math.random() - 0.5) * 0.1 * ballSpeedX;
+
+        const minBallSpeedX = canvas.width / 400;
+        if (Math.abs(ballSpeedX) < minBallSpeedX) {
+            ballSpeedX = ballSpeedX >= 0 ? minBallSpeedX : -minBallSpeedX;
+        }
     }
 
     if (ballY <= paddleHeight + ballRadius) {
