@@ -67,6 +67,11 @@ function draw() {
     }
 }
 
+function saveHighScoreToDatabase(name, score) {
+  const scoreRef = firebase.database().ref('highScores').push();
+  scoreRef.set({ name, score });
+}
+
 function move(elapsedTime) {
     ballX += ballSpeedX * elapsedTime;
     ballY += ballSpeedY * elapsedTime;
@@ -248,13 +253,14 @@ function updateHighScoresList() {
   });
 }
 
-submitName.addEventListener("click", () => {
-  const newScore = { name: nameInput.value, score: hitCounter };
-  highScores.push(newScore);
+submitName.addEventListener('click', () => {
+  const name = nameInput.value;
+
+  // Save the high score to the Firebase Realtime Database
+  saveHighScoreToDatabase(name, hitCounter);
+
+  highScores.push({ name, score: hitCounter });
   highScores.sort((a, b) => b.score - a.score);
-  highScores = highScores.slice(0, 20); // Keep only the top 20 scores
-  const highScoresRef = firebase.database().ref("highScores");
-  highScoresRef.set(highScores);
   updateHighScoresList();
   hidePopup1();
   showPopup2();
