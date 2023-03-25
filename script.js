@@ -254,6 +254,11 @@ function updateHighScoresList() {
   highScoresList.innerHTML = '';
   highScores.forEach((score, index) => {
     const listItem = document.createElement('li');
+
+    if (score.name === "Anonymous") {
+      listItem.classList.add("grey-font");
+    }
+
     listItem.textContent = `${index + 1}. ${score.name} - ${score.score}`;
     highScoresList.appendChild(listItem);
   });
@@ -262,8 +267,10 @@ function updateHighScoresList() {
 submitName.addEventListener("click", () => {
   const user = firebase.auth().currentUser;
   if (user) {
+    const enteredName = nameInput.value.trim() === "" ? "Anonymous" : nameInput.value;
+
     const newScore = {
-      name: nameInput.value,
+      name: enteredName,
       score: hitCounter,
     };
 
