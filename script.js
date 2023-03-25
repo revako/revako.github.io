@@ -44,7 +44,7 @@ function draw() {
     ctx.fillText(scoreText, (canvas.width - scoreTextWidth) / 2, canvas.height / 2 - 10);
 
     if (!gameInProgress) {
-        const titleText = "Paddle Pong Frenzy";
+        const titleText = "🎉 Танюха, с др! 🥳";
         const titleTextWidth = ctx.measureText(titleText).width;
         ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 70);
     }
