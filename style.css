@@ -7,6 +7,10 @@ body {
     background-color: #b5e7a0;
 }
 
+.grey-font {
+  color: grey;
+}
+
 canvas {
     border: 1px solid black;
     position: absolute;
