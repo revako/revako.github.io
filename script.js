@@ -1,53 +1,71 @@
+const colors = [
+  "pink",
+  "orange",
+  "yellow",
+  "lime",
+  "aqua",
+  "SkyBlue",
+  "MediumPurple",
+];
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+let sortedScores = [];
 let paddleHeight;
 let paddleWidth;
 let ballRadius;
-
 let topPaddleX;
 let bottomPaddleX;
 let ballX;
 let ballY;
 let ballSpeedX;
 let ballSpeedY;
-
 let hitCounter = 0;
 let gameInProgress = true;
-
 let lastFrameTime = performance.now();
+let ballColor = getRandomColor();
+let paddleColor = getRandomColor(ballColor);
+
+function getRandomColor(excludeColor) {
+  let newColor;
+  do {
+    newColor = colors[Math.floor(Math.random() * colors.length)];
+  } while (newColor === excludeColor);
+  return newColor;
+}
 
 function draw() {
-    ctx.fillStyle = "#b5e7a0";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#b5e7a0";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "yellow";
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 2;
-    ctx.fillRect(topPaddleX, 0, paddleWidth, paddleHeight);
-    ctx.strokeRect(topPaddleX, 0, paddleWidth, paddleHeight);
-    ctx.fillRect(bottomPaddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-    ctx.strokeRect(bottomPaddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+  ctx.fillStyle = paddleColor;
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 2;
+  ctx.fillRect(topPaddleX, 0, paddleWidth, paddleHeight);
+  ctx.strokeRect(topPaddleX, 0, paddleWidth, paddleHeight);
+  ctx.fillRect(bottomPaddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+  ctx.strokeRect(bottomPaddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
 
-    ctx.beginPath();
-    ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-    ctx.fillStyle = "yellow";
-    ctx.fill();
-    ctx.strokeStyle = "black";
-    ctx.stroke();
-    ctx.closePath();
+  ctx.beginPath();
+  ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
+  ctx.fillStyle = ballColor;
+  ctx.fill();
+  ctx.strokeStyle = "black";
+  ctx.stroke();
+  ctx.closePath();
 
-    ctx.font = "30px Arial";
-    ctx.fillStyle = "black";
-    const scoreText = "Score: " + hitCounter;
-    const scoreTextWidth = ctx.measureText(scoreText).width;
-    ctx.fillText(scoreText, (canvas.width - scoreTextWidth) / 2, canvas.height / 2 - 10);
+  ctx.font = "30px Arial";
+  ctx.fillStyle = "black";
+  const scoreText = "Score: " + hitCounter;
+  const scoreTextWidth = ctx.measureText(scoreText).width;
+  ctx.fillText(scoreText, (canvas.width - scoreTextWidth) / 2, canvas.height / 2 - 10);
 
-    if (!gameInProgress) {
-        const titleText = "🎉 Танюха, с др! 🥳";
-        const titleTextWidth = ctx.measureText(titleText).width;
-        ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 70);
-    }
+  if (!gameInProgress) {
+    const titleText = "Paddle Pong Frenzy";
+    const titleTextWidth = ctx.measureText(titleText).width;
+    ctx.fillText(titleText, (canvas.width - titleTextWidth) / 2, canvas.height / 2 - 70);
+  }
 }
 
 function move(elapsedTime) {
@@ -96,8 +114,10 @@ function move(elapsedTime) {
 }
 
 function increaseBallSpeed() {
-    ballSpeedX *= 1.0125;
-    ballSpeedY *= 1.0125;
+  ballSpeedX *= 1.0125;
+  ballSpeedY *= 1.0125;
+  ballColor = getRandomColor(ballColor);
+  paddleColor = getRandomColor(ballColor);
 }
 
 function stopGame() {
@@ -234,34 +254,75 @@ function hidePopup2() {
 }
 
 function createHighScoreList() {
-  const highScoresRef = firebase.database().ref('highScores').orderByChild('score').limitToLast(20);
+  const highScoresRef = firebase.database().ref('highScores');
 
   highScoresRef.on('value', (snapshot) => {
-    highScores = [];
+    const allScores = [];
     snapshot.forEach((childSnapshot) => {
-      highScores.push(childSnapshot.val());
+      allScores.push(childSnapshot.val());
     });
 
-    highScores.reverse();
-    updateHighScoresList();
-const bestPlayerElement = document.getElementById('bestPlayer');
-bestPlayerElement.innerHTML = `Best player - ${highScores[0].name}`;
+    // Group scores by name and find the highest score for each player
+    const groupedScores = allScores.reduce((acc, score) => {
+      if (!acc[score.name]) {
+        acc[score.name] = score;
+      } else if (score.score > acc[score.name].score) {
+        acc[score.name] = score;
+      }
+      return acc;
+    }, {});
 
+    // Convert the groupedScores object to an array and sort it
+    highScores = Object.values(groupedScores).sort((a, b) => b.score - a.score).slice(0, 20);
+
+    updateHighScoresList();
+    const bestPlayerElement = document.getElementById('bestPlayer');
+    bestPlayerElement.innerHTML = `Best player - ${highScores[0].name}`;
   });
 }
 
-function updateHighScoresList() {
+function updateHighScoresList(currentPlayerScore) {
   highScoresList.innerHTML = '';
   highScores.forEach((score, index) => {
     const listItem = document.createElement('li');
+    const isCurrentPlayer = currentPlayerScore && score.score === currentPlayerScore.score && score.name === currentPlayerScore.name;
 
     if (score.name === "Anonymous") {
       listItem.classList.add("grey-font");
     }
 
+    if (isCurrentPlayer) {
+      listItem.style.color = 'red';
+    }
+
     listItem.textContent = `${index + 1}. ${score.name} - ${score.score}`;
     highScoresList.appendChild(listItem);
   });
+
+  if (currentPlayerScore && !highScores.some(score => score.name === currentPlayerScore.name && score.score === currentPlayerScore.score)) {
+    const separator = document.createElement('li');
+    separator.innerHTML = '----------------';
+    highScoresList.appendChild(separator);
+
+    const currentPlayerListItem = document.createElement('li');
+    currentPlayerListItem.style.color = 'red';
+    const pointWord = currentPlayerScore.score === 1 ? 'point' : 'points';
+    currentPlayerListItem.textContent = `Is that all you got, ${currentPlayerScore.name}? ${currentPlayerScore.score} ${pointWord}? Cmon, you can do better!`;
+    highScoresList.appendChild(currentPlayerListItem);
+  }
+}
+
+function updateHighScores(snapshot) {
+  const scores = [];
+  snapshot.forEach(childSnapshot => {
+    scores.push(childSnapshot.val());
+  });
+
+  // Store the sorted scores list in a variable
+  sortedScores = scores.sort((a, b) => b.score - a.score);
+
+  highScores = sortedScores.slice(0, 20);
+  updateHighScoresList();
 }
 
 submitName.addEventListener("click", () => {
@@ -280,6 +341,9 @@ submitName.addEventListener("click", () => {
       .push(newScore);
     hidePopup1();
     showPopup2();
+
+    // Pass the current player's score to updateHighScoresList()
+    updateHighScoresList(newScore);
   } else {
     console.error("User not authenticated");
   }
